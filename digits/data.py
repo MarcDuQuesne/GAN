@@ -1,4 +1,7 @@
-PATH_TO_DATA = '../input/digit-recognizer/'
+from tensorflow.keras.utils import to_categorical
+from sklearn.model_selection import train_test_split
+import pandas as pd
+import numpy as np
 
 
 def preprocessing(train, split_train_size = 1/7):
@@ -19,7 +22,7 @@ def preprocessing(train, split_train_size = 1/7):
     return X_train, X_test, y_train, y_test
 
 
-def load_data(from_MNIST = True):
+def load_data(data_file):
 
     """
     Return ready to use train and test with images and targets
@@ -27,13 +30,13 @@ def load_data(from_MNIST = True):
     from_MNIST = False: load data from digit-recognizer dataset
     """
 
-    if from_MNIST:
-    # Load the data from mnist dataset (70k images)
-        (x_train, y_train), (x_test, y_test) = mnist.load_data()
-    else:
-        # Load train from digit recognizer kaggle dataset (42k images)
-        train = pd.read_csv(PATH_TO_DATA + 'train.csv')
-        x_train, x_test, y_train, y_test = preprocessing(train)
+    # if from_MNIST:
+    # # Load the data from mnist dataset (70k images)
+    #     (x_train, y_train), (x_test, y_test) = mnist.load_data()
+    # else:
+    #     # Load train from digit recognizer kaggle dataset (42k images)
+    train = pd.read_csv(data_file)
+    x_train, x_test, y_train, y_test = preprocessing(train)
 
     # Set pixel values between -1 and 1
     x_train = (x_train.astype(np.float32) - 127.5)/127.5
