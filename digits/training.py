@@ -15,7 +15,7 @@ def training(epochs=1, batch_size=128):
 
         if e == 1 or e % 20 == 0:
 
-            plot_generated_images(e, generator)
+            plot_generated_images(gan.generator)
 
 training(400,128)
 

@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-def plot_generated_images(epoch, generator, examples=100, dim=(10,10), figsize=(10,10)):
+def plot_generated_images(generator, examples=100, dim=(10,10), figsize=(10,10)):
 
     noise = np.random.normal(loc=0, scale=1, size=[examples, 100])
     generated_images = generator.predict(noise)

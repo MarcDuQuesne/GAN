@@ -1,6 +1,8 @@
 import tensorflow as tf
 import numpy as np
 
+import keras
+
 from keras.layers import Dense, Dropout, Input, LeakyReLU
 from keras.optimizers import Adam
 
@@ -27,7 +29,7 @@ class Generator(tf.keras.Sequential):
                       optimizer = Adam(learning_rate=0.0002, beta_1=0.5))
 
 
-class Discriminator(tf.keras.Sequential):
+class Discriminator(keras.Sequential):
 
   def __init__(self):
     super(Discriminator, self).__init__()
@@ -49,7 +51,7 @@ class Discriminator(tf.keras.Sequential):
                           optimizer = Adam(learning_rate=0.0002, beta_1=0.5))
 
 
-class GAN(tf.keras.Model):
+class GAN(keras.Model):
 
   def __init__(self, generator, discriminator):
       # Initialize random noise with generator
@@ -96,7 +98,7 @@ class GAN(tf.keras.Model):
     self.discriminator.trainable=True
     self.generator.trainable=False
 
-    self.discriminator.train_on_batch(X, y_dis)
+    discriminator_loss = self.discriminator.train_on_batch(X, y_dis)
 
     #Tricking the noised input of the Generator as real data
     noise = np.random.normal(0,1, [batch_size, 100])
@@ -110,4 +112,6 @@ class GAN(tf.keras.Model):
 
     #training  the GAN by alternating the training of the Discriminator
     #and training the chained GAN model with Discriminator’s weights freezed.
-    return self.train_on_batch(noise, y_gen)
+    generator_loss = self.train_on_batch(noise, y_gen)
+
+    return {'discriminator_loss': discriminator_loss, 'generator_loss': generator_loss}
