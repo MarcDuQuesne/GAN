@@ -5,3 +5,4 @@ black
 notebook
 sklearn
 matplotlib
+tqdm
