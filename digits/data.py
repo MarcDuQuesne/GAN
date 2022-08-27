@@ -40,9 +40,13 @@ def load_data(data_file):
 
     # Set pixel values between -1 and 1
     x_train = (x_train.astype(np.float32) - 127.5)/127.5
+    x_test = (x_test.astype(np.float32) - 127.5)/127.5
 
     nb_images_train = x_train.shape[0]
+    nb_images_test = x_test.shape[0]
     # convert shape of x_train from (60000, 28, 28) to (60000, 784)
     # 784 columns per row
     x_train = x_train.reshape(nb_images_train, 784)
+    x_test = x_test.reshape(nb_images_test, 784)
+
     return (x_train, y_train, x_test, y_test)
